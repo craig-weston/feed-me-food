@@ -11,6 +11,9 @@ p{
     width:100%;
     margin-right:40px;
 }
+main.container-fluid{
+    padding:0;
+}
 .loading{
     text-align: center;
     width:100%;
@@ -159,7 +162,7 @@ p{
 }
 .container{
     display: Flex;
-
+    max-width: 100%;
 }
 .restaurant{
     width:70%;
