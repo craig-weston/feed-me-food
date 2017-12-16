@@ -839,23 +839,14 @@ document.getElementById("add-review").addEventListener("submit", function (e) {
     let newName = document.getElementById("your-name");
     let newRating = document.getElementById("your-rating");
     let newReview = document.getElementById("your-review");
+    let restaurantID = restaurant.place_id;
+    console.log(restaurantID);
     if (!(newName.value && newRating.value && newReview.value)) { //if not empty return
         return;
     }
     addReview(newName.value, newRating.value, newReview.value); //add to array values from form
-    Review.create(req.body, function (err) {
-        if (err) {
-            err.status = 400;
-            return next(err);
-        }else{
-            console.log(req.body);
-        }
-        /*res.render("index", {
-            name: req.body.name,
-        });*/
-        //res.location('/');
-        //res.status(200);  //returns no content
-    });
+    //add to database here
+    //how????
     newName.value = ""; //reset form values to 0
     newRating.value = "";
     newReview.value = "";
