@@ -33,6 +33,9 @@ let pos = {
     lat: 39.5696,
     lng: 2.6502,
 };
+let restaurant = {
+    place_id: ''
+};
 
 function restSort() {
     sortAsc = false;
@@ -521,6 +524,8 @@ function initMap() {
             displays extra info below when restaurant is clicked
             -------------------------------------------------------------------------------------*/
             function displayRestaurantInfo(place) {
+                restaurant = place;
+                console.log(restaurant.place_id)
                 showTheForm();
                 restaurantInfoDiv.style.display = "block";
                 document.getElementById('name').textContent = place.name;
@@ -828,6 +833,7 @@ function hideTheForm() {
 /*-----------------------------------------------------------------------------------
 Form functionality on submit add new review to top of reviews and save to array
 -------------------------------------------------------------------------------------*/
+
 document.getElementById("add-review").addEventListener("submit", function (e) {
     e.preventDefault();
     let newName = document.getElementById("your-name");
@@ -837,6 +843,19 @@ document.getElementById("add-review").addEventListener("submit", function (e) {
         return;
     }
     addReview(newName.value, newRating.value, newReview.value); //add to array values from form
+    Review.create(req.body, function (err) {
+        if (err) {
+            err.status = 400;
+            return next(err);
+        }else{
+            console.log(req.body);
+        }
+        /*res.render("index", {
+            name: req.body.name,
+        });*/
+        //res.location('/');
+        //res.status(200);  //returns no content
+    });
     newName.value = ""; //reset form values to 0
     newRating.value = "";
     newReview.value = "";
@@ -848,6 +867,7 @@ function addReview(newName, newRating, newReview) { //add to array and to the pa
         name: newName,
         rating: newRating,
         review: newReview,
+        id: restaurant.id
     };
     let avatar = '../images/avatar.png';
     let reviewsDiv = document.getElementById('reviews');

@@ -33,35 +33,26 @@ app.use(sassMiddleware({
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// import environmental variables from our variables.env file
-require('dotenv').config({ path: 'variables.env' });
+/*// import environmental variables from our variables.env file
+
 
 // Connect to our Database and handle an bad connections
-mongoose.createConnection(process.env.DATABASE);
+mongoose.createConnection(dbConfig);
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 mongoose.connection.on('error', (err) => {
     console.error(`ooopps - ${err.message}`);
-});
+});*/
 
-require('./models/Restaurant');
+require('./models/reviews');
 
-// Sessions allow us to store data on visitors from request to request
-// This keeps users logged in and allows us to send flash messages
-app.use(session({
-    secret: process.env.SECRET,
-    key: process.env.KEY,
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
-}));
 
-const seeder = require('mongoose-seeder'),
-    data = require('./src/data/data.json');
-
+//const seeder = require('mongoose-seeder'),
+    //data = require('./public/data/restaurants.json');
 
 //// or use this ????
 //set up database
-const db = mongoose.connect('mongodb://localhost:27017/courseRating', {
+mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
+const db = mongoose.connect('mongodb://localhost:27017/restaurantReviews', {
     useMongoClient: true
 });
 
@@ -74,13 +65,13 @@ db.once('open', function() {
     //get seeded data
 
 
-    seeder.seed(data, {}, () => {
+    /*seeder.seed(data, {}, () => {
         console.log('data seeded')
     }).then(function(dbData) {
         // The database objects are stored in dbData
     }).catch(function(err) {
         console.log(err);
-    });
+    });*/
 });
 
 

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const restaurantSchema = new mongoose.Schema({
-    name: {
+    geometry: {
         type: String,
         trim: true,
         required: 'Please enter a restaurant name!'
@@ -34,4 +34,4 @@ const restaurantSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('Store', restaurantSchema);
+module.exports = mongoose.model('Reviews', restaurantSchema);
