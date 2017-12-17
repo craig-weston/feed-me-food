@@ -1,0 +1,29 @@
+extends layout
+
+block content
+	if(place)
+		#restaurant-info
+			.container
+				#street-view
+					#street-view-wrapper
+						#pano
+					#photo
+				.restaurant
+					.button-menu
+						button#back-to-map-button.main-button
+							a(href='#header') Back to Map
+						button#see-photo.main-button See Photo
+						button#see-street-view.main-button See Street View
+						button#add-review-button.main-button
+							a(href=`/addReview/${restaurant}`) Add a Review
+					h2#name.restaurant-name #{place.name}
+					p#address.restaurant-details #{place.vicinity}
+					p#telephone.restaurant-details #{place.formatted_phone_number}
+					if(place.website)
+						p#website.restaurant-details #{place.website}
+					.review-header
+						if(place.reviews)
+							h3.title Reviews #{place}
+							p add reviews here
+					#reviews
+					#show-message

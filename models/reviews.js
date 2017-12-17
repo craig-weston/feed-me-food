@@ -22,7 +22,7 @@ const ReviewSchema = new mongoose.Schema({
         default: Date.now
     },
     restaurant: {
-        type: Number
+        type: String
     }
 
 });

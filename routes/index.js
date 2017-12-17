@@ -7,10 +7,15 @@ let restaurant = {};
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express', restaurant: restaurant.place_id});
+  res.render('index', {
+      title: 'title if needed',
+      restaurant: 'ChIJAxbcKmaSlxIRXlys2hUXidQ',
+      place: req.body
+  });
 
 });
 
+//to be fixed so to add to database
 router.post('/review', (req, res, next) => {
     Review.create(req.body, function (err) {
         if (err) {

@@ -1,10 +1,7 @@
 extends layout
 
 block content
-  header#header
-    .logo
-      img(src='../images/logo.png')
-    h1 Restaurant Reviews
+
   main.container-fluid
     #search
       #locationField
@@ -42,7 +39,7 @@ block content
           #iw-phone
           #iw-website
           #iw-open
-          a#iw-reviews(href='#restaurant-info')
+          a#iw-reviews(href=`/restaurant/${restaurant}`)
       #info-content-small
         #iw-icon-small
         h3#iw-rating-small
@@ -63,13 +60,13 @@ block content
             button#see-photo.main-button See Photo
             button#see-street-view.main-button See Street View
             button#add-review-button.main-button
-              a(href='#add-review') Add a Review
+              a(href=`/addReview/${restaurant}`) Add a Review
           h2#name.restaurant-name
           p#address.restaurant-details
           p#telephone.restaurant-details
           p#website.restaurant-details
           .review-header
-            h3.title Reviews
+            h3.title Reviews #{place}
           #reviews
           #show-message
           #form-wrapper

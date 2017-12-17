@@ -450,3 +450,11 @@ header h1{
     }
 
 }
+#form-wrapper, .error{
+    background-color: white;
+    padding: 20px;
+}
+#form-wrapper{
+    max-width: 800px;
+    margin: 0 auto;
+}

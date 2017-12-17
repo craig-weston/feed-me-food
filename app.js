@@ -7,9 +7,10 @@ var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
 const session = require('express-session');
 const mongoose = require('mongoose');
-const MongoStore = require('connect-mongo')(session);
 
 var index = require('./routes/index');
+var restaurant = require('./routes/restaurant');
+var addReview = require('./routes/addReview');
 var users = require('./routes/users');
 
 var app = express();
@@ -32,25 +33,12 @@ app.use(sassMiddleware({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-/*// import environmental variables from our variables.env file
-
-
-// Connect to our Database and handle an bad connections
-mongoose.createConnection(dbConfig);
-mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
-mongoose.connection.on('error', (err) => {
-    console.error(`ooopps - ${err.message}`);
-});*/
-
 require('./models/reviews');
 
 
 //const seeder = require('mongoose-seeder'),
     //data = require('./public/data/restaurants.json');
 
-//// or use this ????
-//set up database
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 const db = mongoose.connect('mongodb://localhost:27017/restaurantReviews', {
     useMongoClient: true
@@ -75,8 +63,9 @@ db.once('open', function() {
 });
 
 
-
 app.use('/', index);
+app.use('/restaurant', restaurant);
+app.use('/addReview', addReview);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

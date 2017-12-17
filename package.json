@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@google/maps": "^0.4.5",
     "body-parser": "~1.18.2",
     "connect-mongo": "^2.0.0",
     "cookie-parser": "~1.4.3",
@@ -13,6 +14,8 @@
     "dotenv": "^4.0.0",
     "express": "~4.15.5",
     "express-session": "^1.15.6",
+    "google-maps": "^3.2.1",
+    "googleplaces": "^0.6.1",
     "mongoose": "^4.13.7",
     "mongoose-seeder": "^1.2.1",
     "morgan": "~1.9.0",
@@ -20,5 +23,8 @@
     "pug": "2.0.0-beta11",
     "serve-favicon": "~2.4.5",
     "session": "^0.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.13.3"
   }
 }
