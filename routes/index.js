@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
   res.render('index', {
       title: 'title if needed',
       restaurant: 'ChIJAxbcKmaSlxIRXlys2hUXidQ',
-      place: req.body
+
   });
 
 });
