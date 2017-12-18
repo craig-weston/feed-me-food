@@ -1,7 +1,19 @@
 extends layout
 
 block content
-	//if(place)
+	- function starRating(place) {
+	- let rating = [];
+	- if (place.rating) {
+	- for (let i = 0; i < 5; i++) {
+	- if (place.rating < (i + 0.5)) {
+	- rating.push('✩');
+	- } else {
+	- rating.push('✭');
+	- }
+	- }
+	- return rating.join(' ');
+	- }
+	-};
 	#restaurant-info
 		.container
 			#street-view
@@ -15,15 +27,22 @@ block content
 					button#see-photo.main-button See Photo
 					button#see-street-view.main-button See Street View
 					button#add-review-button.main-button
-						a(href=`/addReview/${restaurant}`) Add a Review
-				h2#name.restaurant-name #{name} name of restaurant missing
-				p#address.restaurant-details #{vicinity} vicinity missing
-				p#telephone.restaurant-details #{phone} phone missing
-				if(website)
-					p#website.restaurant-details #{website} website missing
-				.review-header
-					if(reviews)
-						h3.title Reviews #{reviews.description} reviews missing
-						p add reviews here
+						a(href=`/addReview/${place.place_id}`) Add a Review
+				h2#name.restaurant-name #{place.name}
+				p#address.restaurant-details #{place.vicinity}
+				p#telephone.restaurant-details #{place.phone}
+				if(place.website)
+					p#website.restaurant-details #{place.website}
 				#reviews
+					.review-header
+						.reviews
+							if(place.reviews)
+									h3.review-title Reviews
+									each review in place.reviews
+										.restaurant-reviews
+											h3.review-title
+												span.profile-photo(style='background-image: url(' + review.profile_photo_url + ')')
+												#review-rating.rating= starRating(review)
+											p= review.text
+
 				#show-message

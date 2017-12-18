@@ -12,6 +12,8 @@ var index = require('./routes/index');
 var restaurant = require('./routes/restaurant');
 var addReview = require('./routes/addReview');
 var users = require('./routes/users');
+var map = require('./routes/map');
+var geolocate = require('./routes/geolocate');
 
 var app = express();
 
@@ -67,6 +69,8 @@ app.use('/', index);
 app.use('/restaurant', restaurant);
 app.use('/addReview', addReview);
 app.use('/users', users);
+app.use('/map', map);
+app.use('/geolocate', geolocate);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

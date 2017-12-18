@@ -6,7 +6,7 @@ const Review = require('../models/reviews');
 let restaurant = {};
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/index', function(req, res, next) {
   res.render('index', {
       title: 'title if needed',
       restaurant: 'ChIJAxbcKmaSlxIRXlys2hUXidQ',

@@ -1,27 +1,22 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/:ID', function(req, res, next) {
-    res.render('restaurant', {
-        title: 'title if needed',
-        restaurant: 'ChIJAxbcKmaSlxIRXlys2hUXidQ',
-        //place: req.body
-        /*place: {
-            name: "my restaurant",
-            vicinity: "lalal land"
-        },*/
-        //name: req.body.place.name,
-        //place: req.body.place
-        place: 'my restaurant',
-        name: 'name',
-        vicinity: 'lalal land',
-        phone: 78787,
-        website: 'llala.com',
-        reviews: {
-            description: 'lala'
+var googleMapsClient = require('@google/maps').createClient({
+    key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
+});
+
+router.get('/:id', function(req, res, next) {
+    googleMapsClient.place({
+        query: 'ChIJw0anMkWSlxIRiifgtrYDSeU',
+    }, function(err, response) {
+        if (!err) {
+            console.log(response.json.results);
+            res.render('restaurant', {
+                title: 'restaurant',
+                place: response.json.results,
+
+            });
         }
     });
-    console.log(req.body)
-
 });
 module.exports = router;
