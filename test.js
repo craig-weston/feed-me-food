@@ -41,8 +41,6 @@ router.get('/', function(req, res, next) {
             });
         }
     });
-
-
-
-
 });
+
+https://googlemaps.github.io/google-maps-services-js/docs/GoogleMapsClient.html
