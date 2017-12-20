@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
         type: 'restaurant'
     }, function(err, response) {
         if (!err) {
-            //console.log(response.json.results);
+            console.log(response.json.results[0].geometry.location);
             res.render('map', {
                 title: 'map',
                 restaurants: response.json.results,

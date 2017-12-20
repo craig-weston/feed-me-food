@@ -13,7 +13,7 @@ block content
 			.map-wrapper
 				#map
 					each restaurant in restaurants
-						a#iw-reviews(href=`/map/${restaurant.place_id}`) #{restaurant.name}
+						a#iw-reviews(data-lat= restaurant.geometry.location.lat data-lng= restaurant.geometry.location.lng href=`/map/${restaurant.place_id}`) #{restaurant.name}
 					#loading.loading
 
 			.info-wrapper
