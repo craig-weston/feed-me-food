@@ -1,12 +1,12 @@
 extends layout
 
 block content
-
+  p= restaurants[0].name
   main.container-fluid
     #search
       #locationField
         input#autocomplete-input(placeholder='Search by city', type='text')
-        input#autocompleteRestaurant-input(placeholder='Search by Restaurant', type='text')
+        input#autocompleteRestaurant-input(placeholder='Search by Restaurant' type='text')
     .map-and-list
       .map-wrapper
         #map
@@ -45,47 +45,28 @@ block content
         h3#iw-rating-small
         .extra-details
           #iw-url-small
-      #info-content-new-restaurant
-        form#form-add-restaurant(action='post')
-    #restaurant-info
-      .container
-        #street-view
-          #street-view-wrapper
-            #pano
-          #photo
-        .restaurant
-          .button-menu
-            button#back-to-map-button.main-button
-              a(href='#header') Back to Map
-            button#see-photo.main-button See Photo
-            button#see-street-view.main-button See Street View
-            button#add-review-button.main-button
-              a(href=`/addReview/${restaurant}`) Add a Review
-          h2#name.restaurant-name
-          p#address.restaurant-details
-          p#telephone.restaurant-details
-          p#website.restaurant-details
-          .review-header
-            h3.title Reviews #{place}
-          #reviews
-          #show-message
-          #form-wrapper
-            form#add-review(method='post')
-              label(for='name') Please add Your Name
-              input#your-name(type='text', name='name', placeholder='Your Name', required='')
-              input#restaruant-id(type='text', name='id', required='' value=restaurant)
-              label(for='rating') What Rating do you give this Restaurant
-              select#your-rating(name='rating', required='')
-                option(value='1') 1
-                option(value='2') 2
-                option(value='3') 3
-                option(value='4') 4
-                option(value='5') 5
-              label(for='your-review') What would you like to say about this restaurant
-              textarea#your-review(name='review', placeholder='Your Review', required='')
-              button#add-to-array.button(type='submit') Add Review
-  script(src='../javascripts/map_orig.js')
-  script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM&libraries=places&callback=initMap', async='', defer='')
-  script(src='https://maps.googleapis.com/maps/api/streetview?size=400x400&location=40.720032,-73.988354\
-      &fov=90&heading=235&pitch=10\
-      &key=AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM')
+
+
+  script.
+      function initMap() {
+          let pos = {
+              lat: 39.5696,
+              lng: 2.6502
+          };
+          var myLatLng = {lat: -25.363, lng: 131.044};
+          var map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 14,
+              center: myLatLng
+          });
+          console.log(restaurants[0].name)
+          var marker = new google.maps.Marker({
+              position: pos,
+              map: map,
+              title: 'hello'
+          });
+
+      }
+  script(src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM&callback=initMap', async = '', defer = '')
+
+  //script(src='../javascripts/map_orig.js')
+

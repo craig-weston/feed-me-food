@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
 const session = require('express-session');
 const mongoose = require('mongoose');
-
 var index = require('./routes/index');
 var restaurant = require('./routes/restaurant');
 var addReview = require('./routes/addReview');
@@ -34,7 +33,6 @@ app.use(sassMiddleware({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-
 require('./models/reviews');
 
 

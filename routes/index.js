@@ -3,16 +3,34 @@ var router = express.Router();
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const Review = require('../models/reviews');
-let restaurant = {};
+
+var googleMapsClient = require('@google/maps').createClient({
+    key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
+});
+let restaurantstest = [];
+let pos = {
+    lat: 39.5696,
+    lng: 2.6502,
+};
 
 /* GET home page. */
 router.get('/index', function(req, res, next) {
-  res.render('index', {
-      title: 'title if needed',
-      restaurant: 'ChIJAxbcKmaSlxIRXlys2hUXidQ',
+        googleMapsClient.placesNearby({
+            location: pos,
+            radius: 500,
+            type: 'restaurant'
+        }, function(err, response) {
+            if (!err) {
+                restaurantstest.push(response.json.results);
+                console.log(restaurantstest)
+                console.log(response.json.results[0].geometry.location);
+                res.render('index', {
+                    title: 'index',
+                    restaurants: response.json.results,
 
-  });
-
+                });
+            }
+        });
 });
 
 //to be fixed so to add to database
