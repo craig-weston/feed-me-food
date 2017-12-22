@@ -222,7 +222,7 @@ function initMap() {
                         clearResults();
                         clearMarkers();
 
-                        googleRestaurants = []; //fill this with coords from data-lat data-lng
+                        googleRestaurants = []; //fill this with coords from d
                         for (let i = 0; i < results.length; i++) {
                             googleRestaurants.push(results[i]);
                         }

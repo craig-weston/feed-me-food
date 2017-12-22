@@ -43,9 +43,6 @@ router.get('/index', function(req, res, next) {
 
             restaurantstest.push(response.json.results);
             console.log(markers)
-            markers.addListener('click', function() {
-                windows.open(map, markers);
-            });
             res.render('index', {
                 title: 'index',
                 restaurants: response.json.results,

@@ -3,22 +3,17 @@ extends layout
 block content
 
 	main.container-fluid
-
-
-		#search
-			#locationField
-				input#autocomplete-input(placeholder='Search by city', type='text')
-				input#autocompleteRestaurant-input(placeholder='Search by Restaurant', type='text')
 		.map-and-list
 			.map-wrapper
 				#map
-					each restaurant in restaurants
-						a#iw-reviews(data-lat= restaurant.geometry.location.lat data-lng= restaurant.geometry.location.lng href=`/map/${restaurant.place_id}`) #{restaurant.name}
-					#loading.loading
 
 			.info-wrapper
 				#listing
 					#results
+						each restaurant in restaurants
+							div.restaurant-info(data-restaurant=restaurant)
+								a#iw-reviews(data-lat= restaurant.geometry.location.lat data-lng= restaurant.geometry.location.lng href=`/map/${restaurant.place_id}`) #{restaurant.name}
+						#loading.loading
 					button#more More results
 			#info-content
 				#iw-icon
@@ -37,4 +32,7 @@ block content
 					#iw-url-small
 
 
+
+	script(src="/javascripts/map_new.js")
+	script(src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBDucSpoWkWGH6n05GpjFLorktAzT1CuEc&callback=initMap', async = '', defer = '')
 
