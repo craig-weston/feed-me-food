@@ -15,22 +15,57 @@ let pos = {
 
 /* GET home page. */
 router.get('/index', function(req, res, next) {
-        googleMapsClient.placesNearby({
-            location: pos,
-            radius: 500,
-            type: 'restaurant'
-        }, function(err, response) {
-            if (!err) {
-                restaurantstest.push(response.json.results);
-                console.log(restaurantstest)
-                console.log(response.json.results[0].geometry.location);
-                res.render('index', {
-                    title: 'index',
-                    restaurants: response.json.results,
+    googleMapsClient.placesNearby({
+        location: pos,
+        radius: 500,
+        type: 'restaurant'
+    }, function(err, response) {
+        if (!err) {
 
-                });
-            }
-        });
+
+
+            markers = ``
+            response.json.results.forEach(place => {
+                console.log(typeof place.name)
+
+                markers += `var marker = new google.maps.Marker({
+                        position: {lat: ${place.geometry.location.lat}, lng: ${place.geometry.location.lng}},
+                        map: map,
+                        title: \`${place.name}\`
+                    });`;
+                //console.log(markers)
+                windows = `var infowindow = new google.maps.InfoWindow({
+                    content: \`${place.name}\`
+                });`
+
+            });
+
+
+            restaurantstest.push(response.json.results);
+            console.log(markers)
+            markers.addListener('click', function() {
+                windows.open(map, markers);
+            });
+            res.render('index', {
+                title: 'index',
+                restaurants: response.json.results,
+                markers: markers,
+                map: `map.initMap = function(){
+                        let pos = {
+                            lat: 39.569016,
+                            lng: 2.6455
+                        };
+                        var myLatLng = pos;
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 14,
+                            center: myLatLng
+                        });
+                        ${markers}
+                       ${windows}
+                      }`,
+            });
+        }
+    });
 });
 
 //to be fixed so to add to database

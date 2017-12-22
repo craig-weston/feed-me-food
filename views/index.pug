@@ -47,26 +47,10 @@ block content
           #iw-url-small
 
 
+
   script.
-      function initMap() {
-          let pos = {
-              lat: 39.5696,
-              lng: 2.6502
-          };
-          var myLatLng = {lat: -25.363, lng: 131.044};
-          var map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 14,
-              center: myLatLng
-          });
-          console.log(restaurants[0].name)
-          var marker = new google.maps.Marker({
-              position: pos,
-              map: map,
-              title: 'hello'
-          });
+      #{map}
 
-      }
-  script(src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM&callback=initMap', async = '', defer = '')
-
+  script(src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBDucSpoWkWGH6n05GpjFLorktAzT1CuEc&callback=map.initMap', async = '', defer = '')
   //script(src='../javascripts/map_orig.js')
 
