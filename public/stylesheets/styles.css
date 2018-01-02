@@ -459,3 +459,16 @@ header h1{
     max-width: 800px;
     margin: 0 auto;
 }
+.gallery{
+    background-color:white;
+    height: auto;
+    order: 1;
+    width: 100%;
+}
+.photo-gallery{
+    width:100%;
+
+}
+.photo-gallery .photo{
+    padding:5px;
+}

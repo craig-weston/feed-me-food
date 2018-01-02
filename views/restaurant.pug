@@ -17,10 +17,16 @@ block content
 	#restaurant-info
 
 		.container
-			#street-view
-				#street-view-wrapper
-					#pano
-				#photo
+			.gallery
+				.street-view
+					#street-view-wrapper
+						#pano
+				.photo-gallery
+					if(place.photos)
+						each photo in place.photos
+							img.photo(src=`https://maps.googleapis.com/maps/api/place/photo?maxheight=200&photoreference=${photo.photo_reference}&key=${key}`)
+
+
 			.restaurant
 				.button-menu
 					button#back-to-map-button.main-button
@@ -30,8 +36,6 @@ block content
 					button#add-review-button.main-button
 						a(href=`/addReview/${place.place_id}`) Add a Review
 				h2#name.restaurant-name #{place.name}
-				if(place.photos)
-					img(src=`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${place.photos[0].photo_reference}&key=AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM`)
 				p#address.restaurant-details #{place.vicinity}
 				p#telephone.restaurant-details #{place.phone}
 				if(place.website)
