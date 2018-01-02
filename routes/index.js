@@ -1,3 +1,4 @@
+/*
 var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose');
@@ -14,7 +15,7 @@ let pos = {
     lng: parseFloat(localStorage.lng),
 };
 
-/* GET home page. */
+/!* GET home page. *!/
 router.get('/index', function(req, res, next) {
     googleMapsClient.placesNearby({
         location: pos,
@@ -75,12 +76,13 @@ router.post('/review', (req, res, next) => {
         }else{
             console.log(req.body);
         }
-        /*res.render("index", {
+        /!*res.render("index", {
             name: req.body.name,
-        });*/
+        });*!/
         //res.location('/');
         res.status(200);  //returns no content
     });
 });
 
 module.exports = router;
+*/

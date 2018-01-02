@@ -48,7 +48,8 @@ function showRestaurantInMap(restaurant) {
 
     var marker = new google.maps.Marker({
         position: restaurant.geometry.location,
-        map: map
+        map: map,
+        icon: createMarkerStars(restaurant)
     });
 
     var infoWindow = generateInfoWindow(restaurant);
@@ -92,7 +93,7 @@ function generateInfoWindowBig(restaurant) {
 
 function buildIWContentSmall(restaurant) {
     return `
-    <h6>${restaurant.name}</h6>
+    <div class="iw-url">${restaurant.name}</div>
     `;
 
 }
@@ -100,7 +101,7 @@ function buildIWContentSmall(restaurant) {
 function buildIWContentBig(restaurant) {
     return `
     <div class="iw-icon"><img class="photo" src="${restaurant.icon}"/></div>
-    <div class="url">
+    <div class="iw-url">
         <b><a href="/map/${restaurant.place_id}">${restaurant.name}</a></b>
     </div>
     <div class="iw-address">${restaurant.vicinity}</div>
@@ -127,4 +128,16 @@ function rating(restaurant){
         }
         return `<div class="iw-rating">${rating.join(' ')}</div>`;
     }
+}
+
+//creates the markers with stars and adds default if no rating
+function createMarkerStars(result) {
+    let rating = Math.round(result.rating);
+    let markerIcon;
+    if (isNaN(rating)) {
+        markerIcon = '../images/' + 'marker_default.png';
+    } else {
+        markerIcon = '../images/' + 'marker_' + rating + '.png';
+    }
+    return markerIcon;
 }

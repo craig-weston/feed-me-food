@@ -1,7 +1,19 @@
 extends layout
 
 block content
-
+	- function starRating(place) {
+	- let rating = [];
+	- if (place.rating) {
+	- for (let i = 0; i < 5; i++) {
+	- if (place.rating < (i + 0.5)) {
+	- rating.push('✩');
+	- } else {
+	- rating.push('✭');
+	- }
+	- }
+	- return rating.join(' ');
+	- }
+	-};
 	main.container-fluid
 		.map-and-list
 			.map-wrapper
@@ -10,26 +22,11 @@ block content
 			.info-wrapper
 				.listing
 					.results
+						h4 Restaurants Nearby
 						each restaurant in restaurants
 							div.restaurant-info(data-restaurant=restaurant)
-								a.iw-reviews(data-lat= restaurant.geometry.location.lat data-lng= restaurant.geometry.location.lng href=`/map/${restaurant.place_id}`) #{restaurant.name}
-			.info-content
-				.iw-icon
-				h3.iw-rating
-				.extra-details
-					.iw-url
-					.iw-address
-					.iw-phone
-					.iw-website
-					.iw-open
-					a.iw-reviews(href=`/restaurant/${restaurant}`)
-			.info-content-small
-				.iw-icon-small
-				h3.iw-rating-small
-				.extra-details
-					.iw-url-small
-
-
+								a.iw-url(data-lat= restaurant.geometry.location.lat data-lng= restaurant.geometry.location.lng href=`/map/${restaurant.place_id}`) #{restaurant.name}
+								.iw-rating-small #{starRating(restaurant)}
 
 	script(src="/javascripts/map_new.js")
 	script(src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBDucSpoWkWGH6n05GpjFLorktAzT1CuEc&callback=initMap', async = '', defer = '')

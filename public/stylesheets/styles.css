@@ -7,7 +7,7 @@ p{
     font-size: 14px;
 }
 #map {
-    height: calc(100vh - 114px);;
+    height: calc(100vh - 78px);;
     width:100%;
     margin-right:40px;
 }
@@ -47,7 +47,7 @@ main.container-fluid{
 
 .listing {
     width: 100%;
-    height: calc(100vh - 156px);
+    height: calc(100vh - 78px);
     overflow: auto;
     cursor: pointer;
     overflow-x: hidden;
@@ -246,7 +246,7 @@ header h1{
 }
 
 
-.iw-url a{
+.iw-url, .iw-url a{
     color:#96bb1e;
 }
 .website a, .iw-website a{
@@ -256,7 +256,7 @@ header h1{
     text-decoration:none;
 }
 
-.iw-url a:hover{
+.iw-url a:hover, a.iw-url:hover{
     color:#c2e254;
     text-decoration:underline;
 }
