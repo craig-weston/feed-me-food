@@ -31,21 +31,21 @@ main.container-fluid{
     margin-bottom:20px;
     background-color: #fff;
 }
-#street-view{
+.street-view{
     height: auto;
     max-height:600px;
     order: 1;
     width: 100%;
     min-width: 320px;
 }
-#pano, #street-view-wrapper{
+.pano, .street-view-wrapper{
     max-height:600px;
     width: 100%;
     min-width: 320px;
     height: 100%;
 }
 
-#listing {
+.listing {
     width: 100%;
     height: calc(100vh - 156px);
     overflow: auto;
@@ -55,10 +55,10 @@ main.container-fluid{
     margin-bottom:10px;
 }
 
-#search{
+.search{
     position: absolute;
 }
-#locationField {
+.locationField {
     position: absolute;
     width: 200px;
     height: 30px;
@@ -66,15 +66,15 @@ main.container-fluid{
     top: 21px;
     z-index: 5;
 }
-#autocomplete-input, #autocompleteRestaurant-input{
+.autocomplete-input, .autocompleteRestaurant-input{
     font-size: 15px;
     padding: 3px;
     width: 100%;
 }
-#autocompleteRestaurant-input{
+.autocompleteRestaurant-input{
     margin-top:10px;
 }
-#controls {
+.controls {
     position: absolute;
     left: 300px;
     width: 140px;
@@ -83,7 +83,7 @@ main.container-fluid{
     background-color: #fff;
 }
 
-#country {
+.country {
     width: 100%;
 }
 .placeIcon{
@@ -94,7 +94,7 @@ main.container-fluid{
     height: 80px;
     margin-right: 15px;
 }
-#results .rating{
+.results .rating{
     font-size:15px;
 }
 .results-list{
@@ -114,7 +114,7 @@ main.container-fluid{
 .results-list:last-child{
     margin-bottom:10px;
 }
-#rating {
+.rating {
     font-size: 13px;
     font-family: Arial Unicode MS Verdana;
 }
@@ -128,7 +128,7 @@ main.container-fluid{
 .iw_table_icon {
     text-align: right;
 }
-#iw-icon{
+.iw-icon{
     font-weight:bold
 }
 .profile-photo{
@@ -144,10 +144,10 @@ main.container-fluid{
     flex-direction: row;
     align-items: center;
 }
-#more{
+.more{
     display: none;
 }
-#more, #add-to-array, #add-restaurant{
+.more, .add-to-array, .add-restaurant{
     width: 90%;
     margin: 0 auto;
     background-color: #8fb31d;
@@ -157,7 +157,7 @@ main.container-fluid{
     padding: 10px;
     font-size: 13px;
 }
-#more:hover, #add-to-array:hover, #add-restaurant:hover{
+.more:hover, .add-to-array:hover, .add-restaurant:hover{
     background-color: #c2e254;
 }
 .container{
@@ -170,6 +170,7 @@ main.container-fluid{
     margin-right: 20px;
     padding-left: 10px;
     padding-right: 10px;
+    background-color: #fff;
 }
 .info-wrapper{
     min-width: 330px;
@@ -185,7 +186,7 @@ main.container-fluid{
 .restaurant-name{
     color:#96bb1e;
 }
-#restaurant-info{
+.restaurant-info{
     background-color: #fff;
     padding: 10px;
 }
@@ -216,74 +217,74 @@ header h1{
 .sort label{
     margin-right: 10px;
 }
-#info-window{
+.info-window{
     max-width:300px;
 }
 .restaurant-details{
     margin:0;
 }
-#info-content .extra-details{
+.info-content .extra-details{
     color: #383838;
     font-weight: 300;
     font-size: 13px;
     max-width:300px;
 }
-#info-content .extra-details div{
+.info-content .extra-details div{
     padding-bottom:5px;
 }
-#iw-rating{
+.iw-rating{
     color: #eb853b;
     font-size: 25px;
     text-align: center;
     font-weight:600;
     margin:0;
 }
-#iw-url {
+.iw-url {
     font-size: 20px;
     text-align: center;
     margin: 5px 0 10px 0;
 }
 
 
-#iw-url a{
+.iw-url a{
     color:#96bb1e;
 }
-#website a, #iw-website a{
+.website a, .iw-website a{
     color:#eb853b;
 }
-#iw-url a, #website a #iw-website a{
+.iw-url a, .website a .iw-website a{
     text-decoration:none;
 }
 
-#iw-url a:hover{
+.iw-url a:hover{
     color:#c2e254;
     text-decoration:underline;
 }
-#website a:hover, #iw-website a:hover{
+.website a:hover, .iw-website a:hover{
     color:#ffc527;
     text-decoration:underline;
 }
-#info-content .gm-style .photo{
+.info-content .gm-style .photo{
     height: 190px;
     width: 300px;
 }
 /* add a review form */
 
-#add-review{
+.add-review{
     margin: 20px 0;
     display: flex;
     flex-direction: column;
 }
-#add-review input, #add-review textarea{
+.add-review input, .add-review textarea{
     margin-bottom:20px;
 }
 
-#your-review{
+.your-review{
     height: 70px;
     font-size: 12px;
     padding: 5px;
 }
-#your-rating{
+.your-rating{
     width: 50px;
     height: 20px;
     border-radius: unset;
@@ -304,10 +305,10 @@ header h1{
     text-decoration: none;
     color:#fff;
 }
-#see-photo, #see-street-view{
+.see-photo, .see-street-view{
     min-width:105px;
 }
-#street-view{
+.street-view{
     height: auto;
     max-height: 600px;
     order: 1;
@@ -318,43 +319,43 @@ header h1{
     display:flex;
     justify-content: space-between;
 }
-#add-review label{
+.add-review label{
     font-size: 12px;
     margin-bottom: 5px;
 }
-#add-review input{
+.add-review input{
     height: 15px;
     padding: 5px;
     font-size: 13px;
     width: 250px;
 }
-#add-review textarea, #add-review input{
+.add-review textarea, .add-review input{
     border: 1px solid #c8c9cb;
 }
 
-#info-content-small{
+.info-content-small{
     font-size:13px;
 }
-#iw-icon-small .gm-style .photo{
+.iw-icon-small .gm-style .photo{
     width:50px;
     height:35px;
 }
-#iw-icon .photo{
+.iw-icon .photo{
     max-width: 300px;
     max-height: 200px;
 }
-#photo{
+.photo{
     order: 2;
 }
-#info-content-small .photo{
+.info-content-small .photo{
     height: 35px;
     width: 50px;
 }
-#iw-rating-small{
+.iw-rating-small{
     color: #eb853b;
     margin:0;
 }
-#iw-url-small, .reviews-link{
+.iw-url-small, .reviews-link{
     text-decoration: none;
     color:#96bb1e;
 }
@@ -362,7 +363,7 @@ header h1{
     text-decoration: underline;
 }
 
-#iw-reviews{
+.iw-reviews{
     color: #eb853b;
     text-decoration:none;
     font-size: 16px;
@@ -370,7 +371,7 @@ header h1{
     display: block;
     padding-top: 10px;
 }
-#iw-reviews:hover{
+.iw-reviews:hover{
     color:#ffc527;
     text-decoration:underline;
 }
@@ -383,18 +384,18 @@ header h1{
 }
 
 /* add new restaurant form info window */
-#form-add-restaurant{
+.form-add-restaurant{
     max-width: 300px;
 
 }
-#form-add-restaurant input{
+.form-add-restaurant input{
     height: 20px;
     width: 100%;
     max-width: 280px;
     margin-bottom: 10px;
     font-size: 12px;
 }
-#form-add-restaurant select{
+.form-add-restaurant select{
     height: 20px;
     width: 50px;
     margin-bottom: 10px;
@@ -405,18 +406,18 @@ header h1{
 .add-res-heading{
     color: #96bb1e;
 }
-#add-restaurant {
+.add-restaurant {
     width: 95%;
 }
 
 
 /* media queries */
 @media screen and (max-width:768px){
-    #map{
+    .map{
         height:100%;
         margin-bottom:10px;
     }
-    #street-view{
+    .street-view{
         height:300px;
         margin-bottom: 10px;
         overflow: hidden;
@@ -425,7 +426,7 @@ header h1{
         width: auto;
         margin-right: 0;
     }
-    #locationField{
+    .locationField{
         left:132px;
         top:14px;
         width:170px;
@@ -445,16 +446,16 @@ header h1{
     .logo{
         text-align: center;
     }
-    #iw-icon .photo{
+    .iw-icon .photo{
         display:none;
     }
 
 }
-#form-wrapper, .error{
+.form-wrapper, .error{
     background-color: white;
     padding: 20px;
 }
-#form-wrapper{
+.form-wrapper{
     max-width: 800px;
     margin: 0 auto;
 }

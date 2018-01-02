@@ -63,16 +63,16 @@ db.once('open', function() {
 });
 
 
-app.use('/', index);
-app.use('/restaurant', restaurant);
+//app.use('/', index);
+//app.use('/restaurant', restaurant);
 app.use('/addReview', addReview);
-app.use('/users', users);
+//app.use('/users', users);
 app.use('/map', map);
-app.use('/geolocate', geolocate);
-app.use('/ajax/places', function(req, res){
+//app.use('/geolocate', geolocate);
+//app.use('/ajax/places', function(req, res){
     //const places = // call gmaps api
-    res.json([]);
-} );
+    //res.json([]);
+//} );
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

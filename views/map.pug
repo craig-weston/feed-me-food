@@ -8,28 +8,28 @@ block content
 				#map
 
 			.info-wrapper
-				#listing
-					#results
+				.listing
+					.results
 						each restaurant in restaurants
 							div.restaurant-info(data-restaurant=restaurant)
-								a#iw-reviews(data-lat= restaurant.geometry.location.lat data-lng= restaurant.geometry.location.lng href=`/map/${restaurant.place_id}`) #{restaurant.name}
-						#loading.loading
-					button#more More results
-			#info-content
-				#iw-icon
-				h3#iw-rating
+								a.iw-reviews(data-lat= restaurant.geometry.location.lat data-lng= restaurant.geometry.location.lng href=`/map/${restaurant.place_id}`) #{restaurant.name}
+						.loading.loading
+					button#more.more More results
+			.info-content
+				.iw-icon
+				h3.iw-rating
 				.extra-details
-					#iw-url
-					#iw-address
-					#iw-phone
-					#iw-website
-					#iw-open
-					a#iw-reviews(href=`/restaurant/${restaurant}`)
-			#info-content-small
-				#iw-icon-small
-				h3#iw-rating-small
+					.iw-url
+					.iw-address
+					.iw-phone
+					.iw-website
+					.iw-open
+					a.iw-reviews(href=`/restaurant/${restaurant}`)
+			.info-content-small
+				.iw-icon-small
+				h3.iw-rating-small
 				.extra-details
-					#iw-url-small
+					.iw-url-small
 
 
 

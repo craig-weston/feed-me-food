@@ -1,19 +1,37 @@
-function initMap() {
-    let pos = {
-        lat: 39.5696,
-        lng: 2.6502
-    };
+navigator.geolocation.getCurrentPosition(function(position){
+    localStorage.setItem("lat", position.coords.latitude.valueOf());
+    localStorage.setItem("lng", position.coords.longitude);
+}, function(err){console.log(err)});
 
+let pos = {
+    lat: parseFloat(localStorage.lat),
+    lng: parseFloat(localStorage.lng),
+};
+
+function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: pos,
         zoom: 14,
         streetViewControl: false
     });
-
-
+    //sets the marker of blue circle to show where you are
+    let marker = new google.maps.Marker({
+        position: pos,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: 'blue',
+            fillOpacity: 0.3,
+            scale: 20,
+            strokeColor: 'blue',
+            strokeWeight: 1,
+            zIndex: 1
+        },
+        draggable: true
+    });
+    marker.setMap(map);
+    //calls the add restaurants function
     initRestaurants(map);
 }
-
 
 function initRestaurants(map) {
 
@@ -24,10 +42,6 @@ function initRestaurants(map) {
         const restaurant = JSON.parse(restaurantDiv.dataset.restaurant);
         showRestaurantInMap(restaurant);
     }
-
-
-
-
 };
 
 function showRestaurantInMap(restaurant) {
@@ -102,15 +116,15 @@ function phone(restaurant){
 }
 
 function rating(restaurant){
+    let rating = [];
     if (restaurant.rating) {
-        let ratingHtml = '';
         for (let i = 0; i < 5; i++) {
             if (restaurant.rating < (i + 0.5)) {
-                ratingHtml += '&#10025;';
+                rating.push('&#10025;');
             } else {
-                ratingHtml += '&#10029;';
+                rating.push('&#10029;');
             }
-            return `<div class="iw-rating">${ratingHtml}</div>`;
         }
+        return `<div class="iw-rating">${rating.join(' ')}</div>`;
     }
 }

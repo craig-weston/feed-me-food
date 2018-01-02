@@ -5,10 +5,7 @@ var googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
 });
 
-let pos = {
-    lat: 39.5696,
-    lng: 2.6502,
-};
+//this position needs to be the geolocation position
 
 router.get('/', function(req, res, next) {
     googleMapsClient.placesNearby({

@@ -13,7 +13,7 @@ function initMap() {
 
 
 
-/*
+
 "use strict";
 let map;
 let infoWindow;
