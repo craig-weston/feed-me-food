@@ -15,6 +15,7 @@ block content
 	- }
 	-};
 	#restaurant-info
+
 		.container
 			#street-view
 				#street-view-wrapper
@@ -29,6 +30,8 @@ block content
 					button#add-review-button.main-button
 						a(href=`/addReview/${place.place_id}`) Add a Review
 				h2#name.restaurant-name #{place.name}
+				if(place.photos)
+					img(src=`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${place.photos[0].photo_reference}&key=AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM`)
 				p#address.restaurant-details #{place.vicinity}
 				p#telephone.restaurant-details #{place.phone}
 				if(place.website)

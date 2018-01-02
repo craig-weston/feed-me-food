@@ -29,15 +29,21 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
+
     googleMapsClient.place({
         placeid: req.params.id,
     }, function(err, response) {
+        if(err) throw err;
         if (!err) {
-            //console.log(response.json.result);
             res.render('restaurant', {
                 title: response.json.result.name,
                 place: response.json.result,
-            });
+                photos: response.json.result.photos,
+                key: `AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM`,
+                titles: 'lala',
+                imageurl: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photos[0].photo_reference}&key=AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM`
+
+        });
         }
     });
 });
