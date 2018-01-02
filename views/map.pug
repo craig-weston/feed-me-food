@@ -13,8 +13,6 @@ block content
 						each restaurant in restaurants
 							div.restaurant-info(data-restaurant=restaurant)
 								a.iw-reviews(data-lat= restaurant.geometry.location.lat data-lng= restaurant.geometry.location.lng href=`/map/${restaurant.place_id}`) #{restaurant.name}
-						.loading.loading
-					button#more.more More results
 			.info-content
 				.iw-icon
 				h3.iw-rating

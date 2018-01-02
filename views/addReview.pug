@@ -6,7 +6,9 @@ block content
 	.form-wrapper
 		.button-menu
 			button#back-to-map-button.main-button
-				a(href='/map') Back to Map
+				a(href=`/map/${restaurant}`) Back to Restaurant
+			button#back-to-restaurant-button.main-button
+				a(href=`/map`) Back to Map
 		form.add-review(method='post')
 			label(for='name') Please add Your Name
 			input.your-name(type='text', name='name', placeholder='Your Name', required='')

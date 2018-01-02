@@ -168,9 +168,8 @@ main.container-fluid{
     width:70%;
     max-width:800px;
     margin-right: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
     background-color: #fff;
+    padding: 20px;
 }
 .info-wrapper{
     min-width: 330px;
@@ -196,6 +195,7 @@ main.container-fluid{
 }
 .restaurant-reviews{
     border-bottom: 1px solid #c8c9cb;
+    padding: 10px 0;
 }
 header{
     display:flex;
@@ -325,9 +325,9 @@ header h1{
 }
 .add-review input{
     height: 15px;
-    padding: 5px;
     font-size: 13px;
     width: 250px;
+    padding: 15px;
 }
 .add-review textarea, .add-review input{
     border: 1px solid #c8c9cb;
