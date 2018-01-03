@@ -12,6 +12,8 @@ let pos = {
 
 router.get('/', function(req, res, next) {
 
+    const pos = req.session.location;
+
     googleMapsClient.placesNearby({
         location: pos,
         radius: 500,
@@ -45,6 +47,33 @@ router.get('/:id', function(req, res, next) {
         });
         }
     });
+});
+
+router.get('/photo/:photoreference', function(req, res, next) {
+
+    googleMapsClient.placePhoto({
+        photoreference: req.params.photoreference,
+    }, function(err, response) {
+        if(err) throw err;
+        if (!err) {
+            let photo = response.json.photo;
+            res.send(photo);
+        }
+    });
+});
+
+
+router.post('/location', function(req, res, next) {
+
+    const location = {
+        lat: req.body.lat,
+        lng: req.body.lng
+    };
+
+    // save location in user session
+    req.session.location = location;
+
+    res.send(201);
 });
 
 module.exports = router;
