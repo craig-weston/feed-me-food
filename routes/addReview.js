@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+const Review = require('../models/reviews');
+
 var googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
 });
@@ -20,4 +22,5 @@ router.get('/:ID', function(req, res, next) {
     });
 
 });
+
 module.exports = router;

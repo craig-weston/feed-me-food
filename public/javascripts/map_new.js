@@ -6,7 +6,7 @@ navigator.geolocation.getCurrentPosition(function(position){
     $.post('/map/location', {
         lat: position.coords.latitude,
         lng: position.coords.longitude
-    })
+    });
 }, function(err){console.log(err)});
 
 let pos = {

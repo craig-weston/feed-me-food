@@ -21,7 +21,7 @@ const ReviewSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    restaurant: {
+    restaurantID: {
         type: String
     }
 

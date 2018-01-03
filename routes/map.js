@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const Review = require('../models/reviews');
 var googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
 });
@@ -12,7 +13,7 @@ let pos = {
 
 router.get('/', function(req, res, next) {
 
-    const pos = req.session.location;
+    //const pos = req.session.location;
 
     googleMapsClient.placesNearby({
         location: pos,
@@ -36,16 +37,28 @@ router.get('/:id', function(req, res, next) {
         placeid: req.params.id,
     }, function(err, response) {
         if(err) throw err;
-        if (!err) {
-            let restaurant = response.json.result;
-            res.render('restaurant', {
-                title: restaurant.name,
-                place: restaurant,
-                photos: restaurant.photos,
-                key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
 
+        let restaurant = response.json.result;
+        res.render('restaurant', {
+            title: restaurant.name,
+            place: restaurant,
+            photos: restaurant.photos,
+            key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
         });
+    });
+});
+
+router.post('/:id', function(req, res, next) {
+
+    Review.create(req.body, function (err) {
+        if (err) {
+            err.status = 400;
+            return next(err);
+        }else{
+            console.log(req.body);
         }
+        res.redirect('/map/'+ req.body.restaurantID)
+
     });
 });
 
@@ -55,10 +68,8 @@ router.get('/photo/:photoreference', function(req, res, next) {
         photoreference: req.params.photoreference,
     }, function(err, response) {
         if(err) throw err;
-        if (!err) {
-            let photo = response.json.photo;
-            res.send(photo);
-        }
+        let photo = response.json.photo;
+        res.send(photo);
     });
 });
 
