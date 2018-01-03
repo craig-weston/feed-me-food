@@ -1,79 +1,150 @@
-var express = require('express');
-var router = express.Router();
-var googleMapsClient = require('@google/maps').createClient({
-    key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
-});
+navigator.geolocation.getCurrentPosition(function(position){
+    localStorage.setItem("lat", position.coords.latitude.valueOf());
+    localStorage.setItem("lng", position.coords.longitude);
 
-//this position needs to be the geolocation position
+
+    $.post('/map/location', {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+    })
+}, function(err){console.log(err)});
+
 let pos = {
-    lat: 39.5696,
-    lng: 2.6502,
+    lat: parseFloat(localStorage.lat),
+    lng: parseFloat(localStorage.lng),
 };
 
-router.get('/', function(req, res, next) {
 
-    const pos = req.session.location;
-
-    googleMapsClient.placesNearby({
-        location: pos,
-        radius: 500,
-        type: 'restaurant'
-    }, function(err, response) {
-        if (!err) {
-            //console.log(response.json.results[0].geometry.location);
-            res.render('map', {
-                title: 'Restaurants Nearby',
-                restaurants: response.json.results,
-
-            });
-        }
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: pos,
+        zoom: 14,
+        streetViewControl: false
     });
-});
-
-router.get('/:id', function(req, res, next) {
-
-    googleMapsClient.place({
-        placeid: req.params.id,
-    }, function(err, response) {
-        if(err) throw err;
-        if (!err) {
-            let restaurant = response.json.result;
-            res.render('restaurant', {
-                title: restaurant.name,
-                place: restaurant,
-                photos: restaurant.photos,
-                key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
-
-        });
-        }
+    //sets the marker of blue circle to show where you are
+    let marker = new google.maps.Marker({
+        position: pos,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: 'blue',
+            fillOpacity: 0.3,
+            scale: 20,
+            strokeColor: 'blue',
+            strokeWeight: 1,
+            zIndex: 1
+        },
+        draggable: true
     });
-});
+    marker.setMap(map);
+    //calls the add restaurants function
+    initRestaurants(map);
+}
 
-router.get('/photo/:photoreference', function(req, res, next) {
+function initRestaurants(map) {
 
-    googleMapsClient.placePhoto({
-        photoreference: req.params.photoreference,
-    }, function(err, response) {
-        if(err) throw err;
-        if (!err) {
-            let photo = response.json.photo;
-            res.send(photo);
-        }
+    var restaurantDivs = document.getElementsByClassName('restaurant-info');
+
+    for(var i=0; i < restaurantDivs.length; i++) {
+        const restaurantDiv = restaurantDivs[i];
+        const restaurant = JSON.parse(restaurantDiv.dataset.restaurant);
+        showRestaurantInMap(restaurant);
+    }
+};
+
+function showRestaurantInMap(restaurant) {
+
+    var marker = new google.maps.Marker({
+        position: restaurant.geometry.location,
+        map: map,
+        icon: createMarkerStars(restaurant)
     });
-});
 
-
-router.post('/location', function(req, res, next) {
-
-    const location = {
-        lat: req.body.lat,
-        lng: req.body.lng
+    var infoWindow = generateInfoWindow(restaurant);
+    var infoWindowBig = generateInfoWindowBig(restaurant);
+    var openInfoWindow = () => {
+        infoWindow.close();
+        infoWindowBig.close();
+        infoWindow.open(map, marker);
+    };
+    var closeInfoWindow = () => {
+        infoWindow.close();
+    };
+    var openInfoWindowBig = () => {
+        infoWindow.close();
+        infoWindowBig.open(map, marker);
+    };
+    var closeInfoWindowBig = () => {
+        infoWindow.close();
+        infoWindowBig.close();
     };
 
-    // save location in user session
-    req.session.location = location;
+    google.maps.event.addListener(marker, 'mouseover', openInfoWindow);
+    google.maps.event.addListener(marker, 'mouseout', closeInfoWindow);
+    google.maps.event.addListener(marker, 'click', openInfoWindowBig);
+    google.maps.event.addListener(map, "click", closeInfoWindowBig);
+    google.maps.event.addListener(marker, "touchstart", openInfoWindow);
+    google.maps.event.addListener(marker, "touchend", closeInfoWindow);
 
-    res.send(201);
-});
+}
 
-module.exports = router;
+function generateInfoWindow(restaurant) {
+    return new google.maps.InfoWindow({
+        content: buildIWContentSmall(restaurant)
+    });
+}
+function generateInfoWindowBig(restaurant) {
+    return new google.maps.InfoWindow({
+        content: buildIWContentBig(restaurant)
+    });
+}
+
+function buildIWContentSmall(restaurant) {
+    return `
+    <div class="iw-url">${restaurant.name}</div>
+    `;
+
+}
+
+function buildIWContentBig(restaurant) {
+    return `
+    <div class="iw-icon"><img class="photo" src="${restaurant.icon}"/></div>
+    <div class="iw-url">
+        <b><a href="/map/${restaurant.place_id}">${restaurant.name}</a></b>
+    </div>
+    <div class="iw-address">${restaurant.vicinity}</div>
+    ${rating(restaurant)}
+    
+    `;
+
+}
+function phone(restaurant){
+    if (restaurant.formatted_phone_number) {
+        return `<div class="iw-phone">${restaurant.formatted_phone_number}</div>`;
+    }
+}
+
+function rating(restaurant){
+    let rating = [];
+    if (restaurant.rating) {
+        for (let i = 0; i < 5; i++) {
+            if (restaurant.rating < (i + 0.5)) {
+                rating.push('&#10025;');
+            } else {
+                rating.push('&#10029;');
+            }
+        }
+        return `<div class="iw-rating">${rating.join(' ')}</div>`;
+    }
+}
+
+//creates the markers with stars and adds default if no rating
+function createMarkerStars(result) {
+    let rating = Math.round(result.rating);
+    let markerIcon;
+    if (isNaN(rating)) {
+        markerIcon = '../images/' + 'marker_default.png';
+    } else {
+        markerIcon = '../images/' + 'marker_' + rating + '.png';
+    }
+    return markerIcon;
+}
