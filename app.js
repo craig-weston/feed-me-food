@@ -6,13 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
 const session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
-var index = require('./routes/index');
-var restaurant = require('./routes/restaurant');
-var addReview = require('./routes/addReview');
-var users = require('./routes/users');
-var map = require('./routes/map');
-var geolocate = require('./routes/geolocate');
 
 var app = express();
 
@@ -33,7 +28,7 @@ app.use(sassMiddleware({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-require('./models/reviews');
+//require('./models/reviews');
 
 
 //const seeder = require('mongoose-seeder'),
@@ -48,6 +43,23 @@ db.on('error', function(err){
     console.error('connection error:', err)
 });
 
+// use sessions for tracking logins
+app.use(session({
+    secret: 'treehouse loves you',
+    resave: true,
+    saveUninitialized: false,
+    store: new MongoStore({
+        mongooseConnection: db
+    })
+}));
+
+// make user ID available in templates
+app.use(function (req, res, next) {
+    res.locals.currentUser = req.session.userId;
+    next();
+});
+
+
 db.once('open', function() {
     console.log('db connected');
     //get seeded data
@@ -61,18 +73,17 @@ db.once('open', function() {
         console.log(err);
     });*/
 });
-
-
+var routes = require('./routes/index');
+app.use('/', routes);
+//var index = require('./routes/index');
+var addReview = require('./routes/addReview');
+//var register = require('./routes/register');
+var map = require('./routes/map');
 //app.use('/', index);
-//app.use('/restaurant', restaurant);
+//app.use('/', register);
 app.use('/addReview', addReview);
-//app.use('/users', users);
 app.use('/map', map);
-//app.use('/geolocate', geolocate);
-//app.use('/ajax/places', function(req, res){
-    //const places = // call gmaps api
-    //res.json([]);
-//} );
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

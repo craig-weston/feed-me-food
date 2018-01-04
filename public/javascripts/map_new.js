@@ -1,13 +1,3 @@
-navigator.geolocation.getCurrentPosition(function(position){
-    localStorage.setItem("lat", position.coords.latitude.valueOf());
-    localStorage.setItem("lng", position.coords.longitude);
-
-
-    $.post('/map/location', {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-    });
-}, function(err){console.log(err)});
 
 let pos = {
     lat: parseFloat(localStorage.lat),

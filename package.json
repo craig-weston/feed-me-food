@@ -29,6 +29,8 @@
     "storage-native": "0.0.4"
   },
   "devDependencies": {
+    "bcrypt": "^1.0.3",
+    "connect-mongo": "^2.0.1",
     "nodemon": "^1.13.3"
   }
 }

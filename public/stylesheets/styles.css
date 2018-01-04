@@ -14,6 +14,15 @@ p{
 main.container-fluid{
     padding:0;
 }
+.main{
+    background-color:white;
+    padding:40px 10px;
+}
+.foot{
+    color:white;
+    text-align: center;
+    margin-top: 20px;
+}
 .loading{
     text-align: center;
     width:100%;
@@ -471,4 +480,18 @@ header h1{
 }
 .photo-gallery .photo{
     padding:5px;
+}
+.login, .signup{
+    margin: 0 auto;
+}
+
+.btn-primary{
+    background-color:#eb853b;
+    border-color: #eb853b;
+}
+.btn-primary:hover{
+    background-color:#ffc527;
+}
+.nav-items{
+    margin-right: 20px;
 }

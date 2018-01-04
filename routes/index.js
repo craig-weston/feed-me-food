@@ -1,74 +1,78 @@
-/*
 var express = require('express');
 var router = express.Router();
-const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
+var User = require('../models/user');
+var mid = require('../middleware');
 const Review = require('../models/reviews');
-
 var googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
 });
-let restaurantstest = [];
 
+//this position needs to be the geolocation position
 let pos = {
-    lat: parseFloat(localStorage.lat),
-    lng: parseFloat(localStorage.lng),
+    lat: 39.5696,
+    lng: 2.6502,
 };
 
-/!* GET home page. *!/
-router.get('/index', function(req, res, next) {
+// GET /map
+router.get('/map', function(req, res, next) {
     googleMapsClient.placesNearby({
         location: pos,
         radius: 500,
         type: 'restaurant'
     }, function(err, response) {
         if (!err) {
-
-
-
-            markers = ``
-            response.json.results.forEach(place => {
-                console.log(typeof place.name)
-
-                markers += `var marker = new google.maps.Marker({
-                        position: {lat: ${place.geometry.location.lat}, lng: ${place.geometry.location.lng}},
-                        map: map,
-                        title: \`${place.name}\`
-                    });`;
-                //console.log(markers)
-                windows = `var infowindow = new google.maps.InfoWindow({
-                    content: \`${place.name}\`
-                });`
-
-            });
-
-
-            restaurantstest.push(response.json.results);
-            console.log(markers)
-            res.render('index', {
-                title: 'index',
+            //console.log(response.json.results[0].geometry.location);
+            res.render('map', {
+                title: 'Restaurants Nearby',
                 restaurants: response.json.results,
-                markers: markers,
-                map: `map.initMap = function(){
-                        let pos = {
-                            lat: 39.569016,
-                            lng: 2.6455
-                        };
-                        var myLatLng = pos;
-                        var map = new google.maps.Map(document.getElementById('map'), {
-                            zoom: 14,
-                            center: myLatLng
-                        });
-                        ${markers}
-                       ${windows}
-                      }`,
+
             });
         }
     });
 });
+// GET /map
+router.get('/profile', mid.requiresLogin, function(req, res, next) {
+    User.findById(req.session.userId)
+        .exec(function (error, user) {
+            if (error) {
+                return next(error);
+            } else {
+                googleMapsClient.placesNearby({
+                    location: pos,
+                    radius: 500,
+                    type: 'restaurant'
+                }, function(err, response) {
+                    if (!err) {
+                        //console.log(response.json.results[0].geometry.location);
+                        res.render('map', {
+                            title: 'Restaurants Nearby',
+                            restaurants: response.json.results,
 
-//to be fixed so to add to database
-router.post('/review', (req, res, next) => {
+                        });
+                    }
+                });
+            }
+        });
+});
+router.get('/:id', function(req, res, next) {
+
+    googleMapsClient.place({
+        placeid: req.params.id,
+    }, function(err, response) {
+        if(err) throw err;
+
+        let restaurant = response.json.result;
+        res.render('restaurant', {
+            title: restaurant.name,
+            place: restaurant,
+            photos: restaurant.photos,
+            key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
+        });
+    });
+});
+// GET /restaurant detail page
+router.post('/:id', function(req, res, next) {
+
     Review.create(req.body, function (err) {
         if (err) {
             err.status = 400;
@@ -76,13 +80,122 @@ router.post('/review', (req, res, next) => {
         }else{
             console.log(req.body);
         }
-        /!*res.render("index", {
-            name: req.body.name,
-        });*!/
-        //res.location('/');
-        res.status(200);  //returns no content
+        res.redirect('/map/'+ req.body.restaurantID)
+
+    });
+});
+// GET /photo
+router.get('/photo/:photoreference', function(req, res, next) {
+
+    googleMapsClient.placePhoto({
+        photoreference: req.params.photoreference,
+    }, function(err, response) {
+        if(err) throw err;
+        let photo = response.json.photo;
+        res.send(photo);
     });
 });
 
+// POST /location
+router.post('/location', function(req, res, next) {
+
+    const location = {
+        lat: req.body.lat,
+        lng: req.body.lng
+    };
+
+    // save location in user session
+    req.session.location = location;
+
+    res.send(201);
+});
+
+// GET /logout
+router.get('/logout', function(req, res, next) {
+    if (req.session) {
+        // delete session object
+        req.session.destroy(function(err) {
+            if(err) {
+                return next(err);
+            } else {
+                return res.redirect('/');
+            }
+        });
+    }
+});
+
+// GET /login
+router.get('/login', mid.loggedOut, function(req, res, next) {
+    return res.render('login', { title: 'Log In'});
+});
+
+// POST /login
+router.post('/login', function(req, res, next) {
+    if (req.body.email && req.body.password) {
+        User.authenticate(req.body.email, req.body.password, function (error, user) {
+            if (error || !user) {
+                var err = new Error('Wrong email or password.');
+                err.status = 401;
+                return next(err);
+            }  else {
+                req.session.userId = user._id;
+                return res.redirect('/map');
+            }
+        });
+    } else {
+        var err = new Error('Email and password are required.');
+        err.status = 401;
+        return next(err);
+    }
+});
+
+// GET /register
+router.get('/register', mid.loggedOut, function(req, res, next) {
+    return res.render('register', { title: 'Sign Up' });
+});
+
+// POST /register
+router.post('/register', function(req, res, next) {
+    if (req.body.email &&
+        req.body.name &&
+        req.body.password &&
+        req.body.confirmPassword) {
+
+        // confirm that user typed same password twice
+        if (req.body.password !== req.body.confirmPassword) {
+            var err = new Error('Passwords do not match.');
+            err.status = 400;
+            return next(err);
+        }
+
+        // create object with form input
+        var userData = {
+            email: req.body.email,
+            name: req.body.name,
+            password: req.body.password
+        };
+
+        // use schema's `create` method to insert document into Mongo
+        User.create(userData, function (error, user) {
+            if (error) {
+                return next(error);
+            } else {
+                req.session.userId = user._id;
+                return res.redirect('/map');
+            }
+        });
+
+    } else {
+        var err = new Error('All fields required.');
+        err.status = 400;
+        return next(err);
+    }
+});
+
+// GET /
+router.get('/', function(req, res, next) {
+    return res.render('index', { title: 'Home' });
+});
+
+
 module.exports = router;
-*/
