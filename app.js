@@ -76,13 +76,13 @@ db.once('open', function() {
 var routes = require('./routes/index');
 app.use('/', routes);
 //var index = require('./routes/index');
-var addReview = require('./routes/addReview');
+//var addReview = require('./routes/addReview');
 //var register = require('./routes/register');
-var map = require('./routes/map');
+//var map = require('./routes/__map');
 //app.use('/', index);
 //app.use('/', register);
-app.use('/addReview', addReview);
-app.use('/map', map);
+//app.use('/addReview', addReview);
+///app.use('/map', map);
 
 
 // catch 404 and forward to error handler

@@ -13,8 +13,13 @@ let pos = {
     lng: 2.6502,
 };
 
+// GET /
+router.get('/', function(req, res, next) {
+    return res.render('index', { title: 'Home' });
+});
+
 // GET /map
-router.get('/map', function(req, res, next) {
+router.get('/mapnologin', function(req, res, next) {
     googleMapsClient.placesNearby({
         location: pos,
         radius: 500,
@@ -31,7 +36,7 @@ router.get('/map', function(req, res, next) {
     });
 });
 // GET /map
-router.get('/profile', mid.requiresLogin, function(req, res, next) {
+router.get('/map', mid.requiresLogin, function(req, res, next) {
     User.findById(req.session.userId)
         .exec(function (error, user) {
             if (error) {
@@ -54,7 +59,7 @@ router.get('/profile', mid.requiresLogin, function(req, res, next) {
             }
         });
 });
-router.get('/:id', function(req, res, next) {
+router.get('/map/:id', mid.requiresLogin, function(req, res, next) {
 
     googleMapsClient.place({
         placeid: req.params.id,
@@ -71,7 +76,7 @@ router.get('/:id', function(req, res, next) {
     });
 });
 // GET /restaurant detail page
-router.post('/:id', function(req, res, next) {
+router.post('/map/:id', function(req, res, next) {
 
     Review.create(req.body, function (err) {
         if (err) {
@@ -84,8 +89,26 @@ router.post('/:id', function(req, res, next) {
 
     });
 });
+
+router.get('/addReview/:ID', mid.requiresLogin, function(req, res, next) {
+    googleMapsClient.place({
+        placeid: req.params.ID,
+    }, function(err, response) {
+        if (!err) {
+            console.log(response.json.result.name);
+            res.render('addReview', {
+                title: `Review ${response.json.result.name}`,
+                restaurantID: req.params.ID,
+                restaurant: response.json.result
+            });
+
+        }
+    });
+
+});
+
 // GET /photo
-router.get('/photo/:photoreference', function(req, res, next) {
+router.get('/map/photo/:photoreference', function(req, res, next) {
 
     googleMapsClient.placePhoto({
         photoreference: req.params.photoreference,
@@ -97,7 +120,7 @@ router.get('/photo/:photoreference', function(req, res, next) {
 });
 
 // POST /location
-router.post('/location', function(req, res, next) {
+router.post('/map/location', function(req, res, next) {
 
     const location = {
         lat: req.body.lat,
@@ -192,10 +215,7 @@ router.post('/register', function(req, res, next) {
     }
 });
 
-// GET /
-router.get('/', function(req, res, next) {
-    return res.render('index', { title: 'Home' });
-});
+
 
 
 module.exports = router;
