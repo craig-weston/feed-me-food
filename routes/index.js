@@ -157,19 +157,14 @@ router.post('/login', function(req, res, next) {
     if (req.body.email && req.body.password) {
         User.authenticate(req.body.email, req.body.password, function (error, user) {
             if (error || !user) {
-                var err = new Error('Wrong email or password.');
-                err.status = 401;
-                return next(err);
+                return res.render('login', { error: 'Wrong email or password.'});
             }  else {
                 req.session.userId = user._id;
                 return res.redirect('/map');
             }
         });
     } else {
-        req.flash('error', errors.map(err => err.msg));
-        var err = new Error('Email and password are required.');
-        err.status = 401;
-        return next(err);
+        return res.render('login', { error: 'Email and password are required.'});
     }
 });
 
@@ -187,9 +182,11 @@ router.post('/register', function(req, res, next) {
 
         // confirm that user typed same password twice
         if (req.body.password !== req.body.confirmPassword) {
-            var err = new Error('Passwords do not match.');
-            err.status = 400;
-            return next(err);
+            return res.render('register', {
+                error: 'Passwords do not match.',
+                name: req.body.name,
+                email: req.body.email
+            });
         }
 
         // create object with form input
@@ -210,9 +207,11 @@ router.post('/register', function(req, res, next) {
         });
 
     } else {
-        var err = new Error('All fields required.');
-        err.status = 400;
-        return next(err);
+        return res.render('register', {
+            error: 'All fields required.',
+            name: req.body.name,
+            email: req.body.email
+        });
     }
 });
 

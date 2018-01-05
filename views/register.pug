@@ -8,10 +8,10 @@ block content
 			form(method='POST' action='/register')
 				div.form-group
 					label(for='name') Name:
-					input#name.form-control(type='text', placeholder='first name' name='name')
+					input#name.form-control(type='text', placeholder='first name' name='name' value=name)
 				div.form-group
 					label(for='email') Email:
-					input#email.form-control(type='email', placeholder='name@email.com' name='email')
+					input#email.form-control(type='email', placeholder='name@email.com' name='email' value=email)
 				div.form-group
 					label(for='pw') Password:
 					input#pw.form-control(type='password' name='password')
@@ -19,3 +19,6 @@ block content
 					label(for='pw2') Confirm Password:
 					input#pw2.form-control(type='password' name='confirmPassword')
 				button.btn.btn-primary(type='submit') Sign up
+				if(error)
+					.error
+						p.error #{error}

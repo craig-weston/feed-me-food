@@ -1,20 +1,23 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
+const isEmail = require('validator').isEmail;
 var UserSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
         required: true,
-        trim: true
+        trim: true,
+        validate: { validator: isEmail , message: '{VALUE} is not a valid email', isAsync: false  }
+
     },
     name: {
         type: String,
-        required: true,
+        required: 'Name is required',
         trim: true
     },
     password: {
         type: String,
-        required: true
+        required: [true, 'Password is required'],
     }
 });
 // authenticate input against database documents

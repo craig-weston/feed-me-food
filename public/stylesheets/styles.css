@@ -462,7 +462,8 @@ header h1{
 }
 .form-wrapper, .error{
     background-color: white;
-    padding: 20px;
+    padding: 20px 0;
+    color: red;
 }
 .form-wrapper{
     max-width: 800px;
