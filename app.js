@@ -8,9 +8,10 @@ var sassMiddleware = require('node-sass-middleware');
 const session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
-
+const flash = require('connect-flash');
+const errorHandlers = require('./handlers/errorHandlers');
 var app = express();
-
+var routes = require('./routes/index');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -45,7 +46,7 @@ db.on('error', function(err){
 
 // use sessions for tracking logins
 app.use(session({
-    secret: 'treehouse loves you',
+    secret: 'foodhits is the best',
     resave: true,
     saveUninitialized: false,
     store: new MongoStore({
@@ -53,9 +54,12 @@ app.use(session({
     })
 }));
 
+// // The flash middleware let's us use req.flash('error', 'Shit!'), which will then pass that message to the next page the user requests
+app.use(flash());
 // make user ID available in templates
 app.use(function (req, res, next) {
     res.locals.currentUser = req.session.userId;
+    res.locals.flashes = req.flash();
     next();
 });
 
@@ -73,7 +77,10 @@ db.once('open', function() {
         console.log(err);
     });*/
 });
-var routes = require('./routes/index');
+
+
+
+
 app.use('/', routes);
 //var index = require('./routes/index');
 //var addReview = require('./routes/addReview');
@@ -84,6 +91,21 @@ app.use('/', routes);
 //app.use('/addReview', addReview);
 ///app.use('/map', map);
 
+
+// If that above routes didnt work, we 404 them and forward to error handler
+app.use(errorHandlers.notFound);
+
+// One of our error handlers will see if these errors are just validation errors
+app.use(errorHandlers.flashValidationErrors);
+
+// Otherwise this was a really bad error we didn't expect! Shoot eh
+if (app.get('env') === 'development') {
+    /* Development Error Handler - Prints stack trace */
+    app.use(errorHandlers.developmentErrors);
+}
+
+// production error handler
+app.use(errorHandlers.productionErrors);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

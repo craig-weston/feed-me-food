@@ -166,6 +166,7 @@ router.post('/login', function(req, res, next) {
             }
         });
     } else {
+        req.flash('error', errors.map(err => err.msg));
         var err = new Error('Email and password are required.');
         err.status = 401;
         return next(err);
