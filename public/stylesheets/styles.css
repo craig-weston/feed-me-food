@@ -492,7 +492,11 @@ header h1{
 }
 .btn-primary:hover{
     background-color:#ffc527;
+    border-color: #eb853b;
 }
 .nav-items{
     margin-right: 20px;
+}
+.title{
+    text-align: center;
 }

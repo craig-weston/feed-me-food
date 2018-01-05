@@ -1,6 +1,22 @@
 extends layout
 
 block content
-  .main.container.text-xs-center
-    h1.display-3 Foodhits Restaurants Nearby
-    a.btn.btn-info-outline.btn-lg(href='/register') Get Started for FREE
+
+  .main
+    h3.title Check out Restaurants nearby
+    .container
+      .col-md-6.login
+        h1.display-4.m-b-2 Log In
+
+        form(method='POST' action='/login')
+          div.form-group
+            label(for='email') Email
+            input.form-control(type='text' id='email' placeholder='email' name='email')
+          div.form-group
+            label(for='password') Password
+            input.form-control(type='password' id='password' placeholder='password' name='password')
+          button.btn.btn-primary(type='submit') Log in
+          if(error)
+            .error
+              p.error #{error}
+
