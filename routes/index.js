@@ -18,25 +18,11 @@ router.get('/', function(req, res, next) {
     return res.render('index', { title: 'Home' });
 });
 
-// GET /map
-router.get('/mapnologin', function(req, res, next) {
-    googleMapsClient.placesNearby({
-        location: pos,
-        radius: 500,
-        type: 'restaurant'
-    }, function(err, response) {
-        if (!err) {
-            //console.log(response.json.results[0].geometry.location);
-            res.render('map', {
-                title: 'Restaurants Nearby',
-                restaurants: response.json.results,
 
-            });
-        }
-    });
-});
 // GET /map
 router.get('/map', mid.requiresLogin, function(req, res, next) {
+    //const pos = req.session.location;
+    console.log(pos);
     User.findById(req.session.userId)
         .exec(function (error, user) {
             if (error) {
@@ -52,7 +38,6 @@ router.get('/map', mid.requiresLogin, function(req, res, next) {
                         res.render('map', {
                             title: 'Restaurants Nearby',
                             restaurants: response.json.results,
-
                         });
                     }
                 });
@@ -71,7 +56,8 @@ router.get('/map/:id', mid.requiresLogin, function(req, res, next) {
             title: restaurant.name,
             place: restaurant,
             photos: restaurant.photos,
-            key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
+            key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM',
+
         });
     });
 });
@@ -111,6 +97,7 @@ router.get('/addReview/:ID', mid.requiresLogin, function(req, res, next) {
 router.get('/map/photo/:photoreference', function(req, res, next) {
 
     googleMapsClient.placePhoto({
+
         photoreference: req.params.photoreference,
     }, function(err, response) {
         if(err) throw err;
@@ -126,6 +113,7 @@ router.post('/map/location', function(req, res, next) {
         lat: req.body.lat,
         lng: req.body.lng
     };
+    console.log(location)
 
     // save location in user session
     req.session.location = location;

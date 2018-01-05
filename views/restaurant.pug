@@ -15,7 +15,6 @@ block content
 	- }
 	-};
 	#restaurant-info
-
 		.container
 			.gallery
 				.street-view
@@ -24,8 +23,7 @@ block content
 				.photo-gallery
 					if(place.photos)
 						each photo in place.photos
-							img.photo(src=`/map/photo/${photo.photo_reference}`)
-
+							img.photo(src=`https://maps.googleapis.com/maps/api/place/photo?maxheight=200&photoreference=${photo.photo_reference}&key=${key}`)
 
 			.restaurant
 				.button-menu
