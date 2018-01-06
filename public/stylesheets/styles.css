@@ -152,6 +152,7 @@ main.container-fluid{
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding: 10px 0 0;
 }
 .more{
     display: none;
@@ -193,6 +194,7 @@ main.container-fluid{
 }
 .restaurant-name{
     color:#96bb1e;
+    padding: 10px 0 0;
 }
 .restaurant-info{
     background-color: #fff;
@@ -460,7 +462,11 @@ header h1{
     }
 
 }
-.form-wrapper, .error{
+.form-wrapper{
+    background-color: white;
+    padding: 20px;
+}
+.error{
     background-color: white;
     padding: 20px 0;
     color: red;

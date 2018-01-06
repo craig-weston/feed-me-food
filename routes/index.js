@@ -34,7 +34,6 @@ router.get('/map', mid.requiresLogin, function(req, res, next) {
                     type: 'restaurant'
                 }, function(err, response) {
                     if (!err) {
-                        //console.log(response.json.results[0].geometry.location);
                         res.render('map', {
                             title: 'Restaurants Nearby',
                             restaurants: response.json.results,
@@ -46,20 +45,29 @@ router.get('/map', mid.requiresLogin, function(req, res, next) {
 });
 router.get('/map/:id', mid.requiresLogin, function(req, res, next) {
 
-    googleMapsClient.place({
-        placeid: req.params.id,
-    }, function(err, response) {
-        if(err) throw err;
+    //get reviews from database
+    Review.find({restaurantID: req.params.id})
+        .sort('-created')
+        .exec(function(err, reviews){
+            if(err){
+                err.status = 400;
+                return next(err);
+            }
+            googleMapsClient.place({
+                placeid: req.params.id,
+            }, function(err, response) {
+                if(err) throw err;
 
-        let restaurant = response.json.result;
-        res.render('restaurant', {
-            title: restaurant.name,
-            place: restaurant,
-            photos: restaurant.photos,
-            key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM',
-
+                let restaurant = response.json.result;
+                res.render('restaurant', {
+                    title: restaurant.name,
+                    place: restaurant,
+                    photos: restaurant.photos,
+                    key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM',
+                    reviews: reviews
+                });
+            });
         });
-    });
 });
 // GET /restaurant detail page
 router.post('/map/:id', function(req, res, next) {
@@ -93,7 +101,7 @@ router.get('/addReview/:ID', mid.requiresLogin, function(req, res, next) {
 
 });
 
-// GET /photo
+/*// GET /photo
 router.get('/map/photo/:photoreference', function(req, res, next) {
 
     googleMapsClient.placePhoto({
@@ -104,7 +112,7 @@ router.get('/map/photo/:photoreference', function(req, res, next) {
         let photo = response.json.photo;
         res.send(photo);
     });
-});
+});*/
 
 // POST /location
 router.post('/map/location', function(req, res, next) {
