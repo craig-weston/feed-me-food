@@ -29,7 +29,7 @@ router.post('/map', function(req, res, next) {
 
 // GET /map
 router.get('/map', mid.requiresLogin, function(req, res, next) {
-    if(req.session.location){
+    /*if(req.session.location){
         pos = req.session.location;
         console.log('geolocation working')
     }else{
@@ -38,7 +38,8 @@ router.get('/map', mid.requiresLogin, function(req, res, next) {
             lng: 2.6502,
         };
         console.log('default palma coords - goelocation not working')
-    }
+    }*/
+    pos = req.session.location;
     console.log(pos);
 
     User.findById(req.session.userId)

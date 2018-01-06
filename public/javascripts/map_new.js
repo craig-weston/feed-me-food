@@ -1,6 +1,6 @@
 let pos = {
-    lat: parseFloat(localStorage.lat),
-    lng: parseFloat(localStorage.lng),
+    lat: parseFloat(sessionStorage.lat),
+    lng: parseFloat(sessionStorage.lng),
 };
 
 
