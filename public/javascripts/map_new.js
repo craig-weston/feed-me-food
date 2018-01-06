@@ -1,14 +1,14 @@
 
 let pos = {
-    lat: parseFloat(localStorage.lat),
-    lng: parseFloat(localStorage.lng),
+    lat: parseFloat(sessionStorage.lat),
+    lng: parseFloat(sessionStorage.lng),
 };
 
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: pos,
-        zoom: 14,
+        zoom: 16,
         streetViewControl: false
     });
     //sets the marker of blue circle to show where you are

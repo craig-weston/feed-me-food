@@ -8,20 +8,37 @@ var googleMapsClient = require('@google/maps').createClient({
 });
 
 //this position needs to be the geolocation position
-let pos = {
-    lat: 39.5696,
-    lng: 2.6502,
-};
+let pos;
 
 // GET /
 router.get('/', function(req, res, next) {
     return res.render('index', { title: 'Home' });
 });
 
+// POST /location
+router.post('/map', function(req, res, next) {
+    const location = {
+        lat: req.body.lat,
+        lng: req.body.lng
+    };
+    // save location in user session
+    req.session.location = location;
+    res.sendStatus(201);
+});
+
 
 // GET /map
 router.get('/map', mid.requiresLogin, function(req, res, next) {
-    const pos = req.session.location;
+    if(req.session.location){
+        pos = req.session.location;
+        console.log('geolocation working')
+    }else{
+        pos = {
+            lat: 39.5696,
+            lng: 2.6502,
+        };
+        console.log('default palma coords - goelocation not working')
+    }
     console.log(pos);
 
     User.findById(req.session.userId)
@@ -115,19 +132,7 @@ router.get('/map/photo/:photoreference', function(req, res, next) {
     });
 });*/
 
-// POST /location
-router.post('/map', function(req, res, next) {
-    const location = {
-        lat: req.body.lat,
-        lng: req.body.lng
-    };
-    console.log('location from session')
-    console.log(location)
 
-    // save location in user session
-    req.session.location = location;
-    res.sendStatus(201);
-});
 
 // GET /logout
 router.get('/logout', function(req, res, next) {
