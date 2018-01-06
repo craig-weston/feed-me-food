@@ -22,10 +22,9 @@
     "google-maps": "^3.2.1",
     "googleplaces": "^0.6.1",
     "has-geolocation": "^1.0.1",
-    "mongoose": "^4.13.7",
+    "mongoose": "^4.13.8",
     "mongoose-seeder": "^1.2.1",
     "morgan": "~1.9.0",
-    "node-sass-middleware": "0.9.8",
     "pug": "2.0.0-beta11",
     "serve-favicon": "~2.4.5",
     "session": "^0.1.0",
@@ -35,7 +34,7 @@
     "bcrypt": "^1.0.3",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^2.0.1",
-    "nodemon": "^1.13.3",
+    "nodemon": "^1.14.8",
     "validator": "^9.2.0"
   }
 }

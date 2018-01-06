@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 
 // GET /map
 router.get('/map', mid.requiresLogin, function(req, res, next) {
-    //const pos = req.session.location;
+    const pos = req.session.location;
     console.log(pos);
 
     User.findById(req.session.userId)
@@ -117,17 +117,16 @@ router.get('/map/photo/:photoreference', function(req, res, next) {
 
 // POST /location
 router.post('/map', function(req, res, next) {
-
     const location = {
         lat: req.body.lat,
         lng: req.body.lng
     };
-    console.log('here')
+    console.log('location from session')
     console.log(location)
 
     // save location in user session
     req.session.location = location;
-    res.send(201);
+    res.sendStatus(201);
 });
 
 // GET /logout
