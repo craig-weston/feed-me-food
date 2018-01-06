@@ -4,6 +4,9 @@ let pos = {
 };
 
 
+//use async here to control that map only loads when
+// lat and lng are in session storage.
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: pos,

@@ -23,7 +23,7 @@ router.post('/map', function(req, res, next) {
     };
     // save location in user session
     req.session.location = location;
-    res.sendStatus(201);
+    res.redirect('/map');
 });
 
 
