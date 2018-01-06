@@ -1,4 +1,3 @@
-
 let pos = {
     lat: parseFloat(sessionStorage.lat),
     lng: parseFloat(sessionStorage.lng),
