@@ -1,6 +1,6 @@
 let pos = {
-    lat: parseFloat(sessionStorage.lat),
-    lng: parseFloat(sessionStorage.lng),
+    lat: parseFloat(localStorage.lat),
+    lng: parseFloat(localStorage.lng),
 };
 
 
@@ -27,6 +27,17 @@ function initMap() {
     marker.setMap(map);
     //calls the add restaurants function
     initRestaurants(map);
+
+    /*map.addListener('dragend', function () {
+        console.log('dragged');
+        $.post('/map', {
+            lat: map.getCenter().lat(),
+            lng: map.getCenter().lng(),
+
+        });
+        initRestaurants(map);
+    });*/
+
 }
 
 function initRestaurants(map) {
