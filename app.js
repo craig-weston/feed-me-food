@@ -24,13 +24,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
-const db = mongoose.connect(process.env.DATABASE || 'mongodb://localhost:27017/restaurantReviews', {
+const db = mongoose.connect(process.env.MONGOLAB_URI || process.env.DATABASE || 'mongodb://localhost:27017/restaurantReviews', {
     useMongoClient: true
 });
 
-db.on('error', function(err){
+/*db.on('error', function(err){
     console.error('connection error:', err)
-});
+});*/
 
 // use sessions for tracking logins
 app.use(session({
@@ -48,10 +48,10 @@ app.use(function (req, res, next) {
     next();
 });
 
-
+/*
 db.once('open', function() {
     console.log('db connected');
-});
+});*/
 
 //Routes
 app.use('/', routes);
