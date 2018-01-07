@@ -27,13 +27,13 @@
     "pug": "2.0.0-beta11",
     "serve-favicon": "~2.4.5",
     "session": "^0.1.0",
-    "storage-native": "0.0.4"
-  },
-  "devDependencies": {
+    "storage-native": "0.0.4",
     "bcrypt": "^1.0.3",
     "connect-flash": "^0.1.1",
     "dotenv": "^4.0.0",
-    "nodemon": "^1.14.8",
     "validator": "^9.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.8"
   }
 }
