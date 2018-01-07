@@ -15,6 +15,11 @@ router.get('/', function(req, res, next) {
     return res.render('index', { title: 'Home' });
 });
 
+// GET / splash page
+router.get('/splash', function(req, res, next) {
+    return res.render('splash', { title: 'loading' });
+});
+
 // POST /location
 router.post('/map', function(req, res, next) {
     const location = {
@@ -25,7 +30,6 @@ router.post('/map', function(req, res, next) {
     req.session.location = location;
     res.redirect('/map');
 });
-
 
 // GET /map
 router.get('/map', mid.requiresLogin, function(req, res, next) {

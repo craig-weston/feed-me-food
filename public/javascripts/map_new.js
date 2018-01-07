@@ -2,44 +2,40 @@ let pos = {
     lat: parseFloat(sessionStorage.lat),
     lng: parseFloat(sessionStorage.lng),
 };
-
-
-//use async here to control that map only loads when
-// lat and lng are in session storage.
-
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: pos,
-        zoom: 16,
-        streetViewControl: false
-    });
-    //sets the marker of blue circle to show where you are
-    let marker = new google.maps.Marker({
-        position: pos,
-        icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            fillColor: 'blue',
-            fillOpacity: 0.3,
-            scale: 20,
-            strokeColor: 'blue',
-            strokeWeight: 1,
-            zIndex: 1
-        },
-        draggable: true
-    });
-    marker.setMap(map);
-    //calls the add restaurants function
-    initRestaurants(map);
 
-    /*map.addListener('dragend', function () {
-        console.log('dragged');
-        $.post('/map', {
-            lat: map.getCenter().lat(),
-            lng: map.getCenter().lng(),
-
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: pos,
+            zoom: 16,
+            streetViewControl: false
         });
+        //sets the marker of blue circle to show where you are
+        let marker = new google.maps.Marker({
+            position: pos,
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: 'blue',
+                fillOpacity: 0.3,
+                scale: 20,
+                strokeColor: 'blue',
+                strokeWeight: 1,
+                zIndex: 1
+            },
+            draggable: true
+        });
+        marker.setMap(map);
+        //calls the add restaurants function
         initRestaurants(map);
-    });*/
+
+        /*map.addListener('dragend', function () {
+            console.log('dragged');
+            $.post('/map', {
+                lat: map.getCenter().lat(),
+                lng: map.getCenter().lng(),
+
+            });
+            initRestaurants(map);
+        });*/
 
 }
 
