@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
-const db = mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/restaurantReviews', {
+const db = mongoose.connect(process.env.DATABASE || 'mongodb://localhost:27017/restaurantReviews', {
     useMongoClient: true
 });
 
