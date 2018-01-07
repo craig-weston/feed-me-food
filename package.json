@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "./bin/www",
+    "start": "node start.js",
     "dev": "nodemon ./bin/www"
   },
   "engines": {
