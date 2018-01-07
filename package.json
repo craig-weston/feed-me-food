@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./start.js",
-    "dev": "nodemon ./bin/www"
+    "dev": "nodemon ./start.js"
   },
   "engines": {
     "node": "6.12.3"

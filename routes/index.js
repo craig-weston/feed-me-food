@@ -4,7 +4,7 @@ var User = require('../models/user');
 var mid = require('../middleware');
 const Review = require('../models/reviews');
 var googleMapsClient = require('@google/maps').createClient({
-    key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM'
+    key: process.env.MAP_KEY
 });
 
 //this position needs to be the geolocation position
@@ -86,7 +86,7 @@ router.get('/map/:id', mid.requiresLogin, function(req, res, next) {
                     title: restaurant.name,
                     place: restaurant,
                     photos: restaurant.photos,
-                    key: 'AIzaSyCVXZ0vhPliqPIvwSUaSvZJ9XmcoJKtXaM',
+                    key: process.env.MAP_KEY,
                     reviews: reviews
                 });
             });
@@ -220,8 +220,5 @@ router.post('/register', function(req, res, next) {
         });
     }
 });
-
-
-
 
 module.exports = router;
