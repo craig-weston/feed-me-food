@@ -1,8 +1,8 @@
 // import environmental variables from our variables.env file
-//require('dotenv').config({ path: 'variables.env' });
+require('dotenv').config({ path: 'variables.env' });
 // Start our app!
-var port = process.env.PORT || 8080;
 const app = require('./app');
-app.listen(port, function() {
-    console.log('Our app is running on http://localhost:' + port);
+app.set('port', process.env.PORT || 7777);
+const server = app.listen(app.get('port'), () => {
+    console.log(`Express running → PORT ${server.address().port}`);
 });

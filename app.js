@@ -16,24 +16,24 @@ app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-/*app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'public')));*/
+app.use(express.static(path.join(__dirname, 'public')));
 
-/*mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
+mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 const db = mongoose.connect(process.env.MONGOLAB_URI || process.env.DATABASE || 'mongodb://localhost:27017/restaurantReviews', {
     useMongoClient: true
-});*/
+});
 
-/*db.on('error', function(err){
+db.on('error', function(err){
     console.error('connection error:', err)
-});*/
+});
 
 // use sessions for tracking logins
-/*app.use(session({
+app.use(session({
     secret: 'foodhits is the best',
     resave: true,
     saveUninitialized: false,
@@ -46,12 +46,12 @@ const db = mongoose.connect(process.env.MONGOLAB_URI || process.env.DATABASE || 
 app.use(function (req, res, next) {
     res.locals.currentUser = req.session.userId;
     next();
-});*/
+});
 
-/*
+
 db.once('open', function() {
     console.log('db connected');
-});*/
+});
 
 //Routes
 app.use('/', routes);
@@ -67,7 +67,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  //res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
