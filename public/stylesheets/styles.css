@@ -17,6 +17,7 @@ main.container-fluid{
 .main{
     background-color:white;
     padding:40px 10px;
+    justify-content:flex-end;
 }
 .foot{
     color:white;
@@ -356,7 +357,7 @@ header h1{
     max-height: 200px;
 }
 .photo{
-    order: 2;
+    order: 1;
 }
 .info-content-small .photo{
     height: 35px;
@@ -446,9 +447,8 @@ header h1{
         flex-direction: column;
     }
     .restaurant{
-        order:2;
+        order:0;
         width:100%;
-        padding:0;
         margin:0;
     }
     .map-wrapper{
