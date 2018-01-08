@@ -6,7 +6,7 @@ function initMap() {
 
         map = new google.maps.Map(document.getElementById('map'), {
             center: pos,
-            zoom: 16,
+            zoom: 14,
             streetViewControl: false
         });
         //sets the marker of blue circle to show where you are

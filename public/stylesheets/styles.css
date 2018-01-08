@@ -18,6 +18,12 @@ main.container-fluid{
     background-color:white;
     padding:40px 10px;
 }
+.home{
+    max-width:1024px
+}
+.home .login{
+    margin-bottom:30px;
+}
 .foot{
     color:white;
     text-align: center;
@@ -39,19 +45,6 @@ main.container-fluid{
     width: 100%;
     margin-bottom:20px;
     background-color: #fff;
-}
-.street-view{
-    height: auto;
-    max-height:600px;
-    order: 1;
-    width: 100%;
-    min-width: 320px;
-}
-.pano, .street-view-wrapper{
-    max-height:600px;
-    width: 100%;
-    min-width: 320px;
-    height: 100%;
 }
 
 .listing {
@@ -501,10 +494,15 @@ header h1{
 }
 .nav-items{
     margin-right: 20px;
+    flex-direction: row;
+    display: flex;
 }
 .title{
     text-align: center;
 }
 .navbar{
     justify-content:flex-end;
+}
+.results .button{
+    margin-bottom:10px;
 }

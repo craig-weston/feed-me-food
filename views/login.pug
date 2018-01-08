@@ -1,10 +1,9 @@
 extends layout
-
 block content
   .main.container
     .col-md-6.login
       h1.display-4.m-b-2 Log In
-
+      p Welcome back to foodhits where you can find your best nearby restaurants. Don't forget to leave a review after your visit.
       form(method='POST' action='/login')
         div.form-group
           label(for='email') Email

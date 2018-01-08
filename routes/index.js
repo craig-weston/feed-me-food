@@ -12,12 +12,12 @@ let pos;
 
 // GET /
 router.get('/', function(req, res, next) {
-    return res.render('index', { title: 'Home' });
+    res.redirect('/map');
 });
 
 // GET / splash page
-router.get('/splash', function(req, res, next) {
-    return res.render('splash', { title: 'loading' });
+router.get('/home', function(req, res, next) {
+    return res.render('index', { title: 'Home' });
 });
 
 // POST /location
@@ -33,7 +33,7 @@ router.post('/map', function(req, res, next) {
 
 // GET /map
 router.get('/map', mid.requiresLogin, function(req, res, next) {
-    /*if(req.session.location){
+    if(req.session.location){
         pos = req.session.location;
         console.log('geolocation working')
     }else{
@@ -42,9 +42,9 @@ router.get('/map', mid.requiresLogin, function(req, res, next) {
             lng: 2.6502,
         };
         console.log('default palma coords - goelocation not working')
-    }*/
-    pos = req.session.location;
-    console.log(pos);
+    }
+    //pos = req.session.location;
+    //console.log(pos);
 
     User.findById(req.session.userId)
         .exec(function (error, user) {
@@ -53,7 +53,7 @@ router.get('/map', mid.requiresLogin, function(req, res, next) {
             } else {
                 googleMapsClient.placesNearby({
                     location: pos,
-                    radius: 500,
+                    radius: 1500,
                     type: 'restaurant'
                 }, function(err, response) {
                     if (!err) {
@@ -163,20 +163,28 @@ router.post('/login', function(req, res, next) {
     if (req.body.email && req.body.password) {
         User.authenticate(req.body.email, req.body.password, function (error, user) {
             if (error || !user) {
-                return res.render('login', { error: 'Wrong email or password.'});
+                return res.render('login', {
+                    error: 'Wrong email or password.',
+                    title: 'Log In'
+                });
             }  else {
                 req.session.userId = user._id;
                 return res.redirect('/map');
             }
         });
     } else {
-        return res.render('login', { error: 'Email and password are required.'});
+        return res.render('login', {
+            error: 'Email and password are required.',
+            title: 'Log In'
+        });
     }
 });
 
 // GET /register
 router.get('/register', mid.loggedOut, function(req, res, next) {
-    return res.render('register', { title: 'Sign Up' });
+    return res.render('register', {
+        title: 'Sign Up'
+    });
 });
 
 // POST /register
@@ -191,7 +199,8 @@ router.post('/register', function(req, res, next) {
             return res.render('register', {
                 error: 'Passwords do not match.',
                 name: req.body.name,
-                email: req.body.email
+                email: req.body.email,
+                title: 'Sign Up'
             });
         }
 
@@ -216,7 +225,8 @@ router.post('/register', function(req, res, next) {
         return res.render('register', {
             error: 'All fields required.',
             name: req.body.name,
-            email: req.body.email
+            email: req.body.email,
+            title: 'Sign Up'
         });
     }
 });

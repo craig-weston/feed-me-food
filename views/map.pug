@@ -1,5 +1,4 @@
 extends layout
-
 block content
 	- function starRating(place) {
 	- let rating = [];
@@ -22,12 +21,12 @@ block content
 			.info-wrapper
 				.listing
 					.results
+						a.button.btn.btn-primary(href=`/map/`) Reload Map
 						h4 Restaurants Nearby
 						each restaurant in restaurants
 							div.restaurant-info(data-restaurant=restaurant)
 								a.iw-url(data-lat= restaurant.geometry.location.lat data-lng= restaurant.geometry.location.lng href=`/map/${restaurant.place_id}`) #{restaurant.name}
 								.iw-rating-small #{starRating(restaurant)}
-	script(src="/javascripts/geolocation.js")
 	script(src="/javascripts/map_new.js")
 	script(src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBDucSpoWkWGH6n05GpjFLorktAzT1CuEc&callback=initMap', async = '', defer = '')
 
