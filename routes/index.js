@@ -43,8 +43,6 @@ router.get('/map', mid.requiresLogin, function(req, res, next) {
         };
         console.log('default palma coords - goelocation not working')
     }
-    //pos = req.session.location;
-    //console.log(pos);
 
     User.findById(req.session.userId)
         .exec(function (error, user) {

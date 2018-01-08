@@ -16,9 +16,6 @@ block content
 	#restaurant-info
 		.container
 			.gallery
-				.street-view
-					#street-view-wrapper
-						#pano
 				.photo-gallery
 					if(place.photos)
 						each photo in place.photos
@@ -35,7 +32,7 @@ block content
 				p.telephone.restaurant-details #{place.formatted_phone_number}
 				if(place.website)
 					p.website.restaurant-details
-						a(href=place.website) #{place.website}
+						a(href=place.website) Go to Website
 				#reviews
 					.review-header
 						.reviews
