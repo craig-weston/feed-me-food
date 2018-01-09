@@ -1,6 +1,5 @@
 h1.display-4.m-b-2 Log In
-
-        form(method='POST' action='/login')
+form(method='POST' action='/login')
           div.form-group
             label(for='email') Email
             input.form-control(type='text' id='email' placeholder='email' name='email')
@@ -11,3 +10,4 @@ h1.display-4.m-b-2 Log In
           if(error)
             .error
               p.error #{error}
+        
