@@ -512,9 +512,6 @@ header h1{
     }
 }
 
-.login-container{
-    display:flex;
-    flex-direction:column;
-    max-width:400px;
-    justify-self: center;
+.container.login, .container.register {
+    justify-content: center;
 }
